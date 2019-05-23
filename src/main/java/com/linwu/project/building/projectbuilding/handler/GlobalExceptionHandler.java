@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
     paramsError.setRespDesc(ex.getMessage());
     return paramsError;
   }
-    
+
   @ExceptionHandler(ParamsException.class)
   @ResponseBody
   public Result paramsException(ParamsException ex) {

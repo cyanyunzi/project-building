@@ -16,6 +16,8 @@ HELP.md
 *.iws
 *.iml
 *.ipr
+mvnw
+*.cmd
 
 ### NetBeans ###
 /nbproject/private/
@@ -27,5 +29,8 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+.mvn
+
 
 
