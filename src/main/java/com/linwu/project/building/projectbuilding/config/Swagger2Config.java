@@ -11,30 +11,33 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @author ：ZhangLei
- * @Date ：2018/4/26
+ * @author ：ZhangLei @Date ：2018/4/26
  * @description :Swagger配置类
  */
 @Configuration
 @EnableSwagger2
 public class Swagger2Config {
 
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.spring.validator.controller"))
-                .paths(PathSelectors.any())
-                .build();
-    }
+  @Bean
+  public Docket createRestApi() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .apiInfo(apiInfo())
+        .select()
+        .apis(
+            RequestHandlerSelectors.basePackage(
+                "com.linwu.project.building.projectbuilding.controller"))
+        .paths(PathSelectors.any())
+        .build();
+  }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("valid api")
-                .description("valid api")
-                .termsOfServiceUrl("valid api")
-                .version("1.0")
-                .build();
-    }
+
+
+  private ApiInfo apiInfo() {
+    return new ApiInfoBuilder()
+        .title("swagger api")
+        .description("swagger api")
+        .termsOfServiceUrl("swagger api")
+        .version("1.0")
+        .build();
+  }
 }
