@@ -1,9 +1,12 @@
 package com.linwu.project.building.projectbuilding.utils;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import com.linwu.project.building.projectbuilding.model.base.bo.BaseBO;
 import com.linwu.project.building.projectbuilding.model.base.dto.BaseDTO;
+import com.linwu.project.building.projectbuilding.model.base.response.BaseIdResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseListResp;
+import com.linwu.project.building.projectbuilding.model.base.response.BasePageListResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseResp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -77,6 +80,39 @@ public class ConvertUtils {
         t.forEach(bean -> baseListResp.getRecords().add(convertResp(bean, respClass)));
       }
       return baseListResp;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+
+  public static <T extends IPage, R extends BaseResp> BasePageListResp<R> convertBasePageListResp(
+          T t, Class<R> respClass) {
+    try {
+      if (t == null) {
+        return null;
+      }
+
+      BasePageListResp pageListResp = new BasePageListResp();
+      BeanUtils.copyProperties(t, pageListResp);
+
+      List records = convertRespList(t.getRecords(), respClass);
+      pageListResp.setRecords(records);
+      return pageListResp;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static <T, R extends BaseResp> BaseIdResp convertBaseIdResp(
+          T t) {
+    try {
+      if (t == null) {
+        return null;
+      }
+      BaseIdResp resp = new BaseIdResp();
+      BeanUtils.copyProperties(t, resp);
+      return resp;
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

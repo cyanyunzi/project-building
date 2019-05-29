@@ -1,12 +1,11 @@
 package com.linwu.project.building.projectbuilding.model.base.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.linwu.project.building.projectbuilding.model.base.BaseBean;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseResp;
 import com.linwu.project.building.projectbuilding.utils.ConvertUtils;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
 /**
  * @author ：林雾
@@ -14,12 +13,13 @@ import org.springframework.beans.BeanUtils;
  * @description :查询对象
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class BaseEntity extends BaseBean {
+  @TableId(value = "id", type = IdType.AUTO)
   private Integer id;
 
+  public static final String ID = "id";
+
   public <R extends BaseResp> R convertResp(Class<R> clazz) {
-      return ConvertUtils.convertResp(this,clazz);
+    return ConvertUtils.convertResp(this, clazz);
   }
 }

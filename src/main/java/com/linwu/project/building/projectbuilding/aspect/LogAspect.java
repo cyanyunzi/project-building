@@ -10,7 +10,10 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 /**
  * @author ：林雾
@@ -27,11 +30,16 @@ public class LogAspect {
   @Before("webLog()")
   public void deBefore(JoinPoint joinPoint) {
     HttpServletRequest request = RequestUtils.getRequest();
+    Object[] arr = joinPoint.getArgs();
+    arr = Arrays.stream(arr)
+            .filter(b -> !(b instanceof ServletRequest || b instanceof ServletResponse))
+            .toArray();
+
     log.info(
         ">>>>>请求开始>>>>> URL:{} METHOD:{} args:{}",
         request.getRequestURL().toString(),
         request.getMethod(),
-        new Gson().toJson(joinPoint.getArgs()));
+        new Gson().toJson(arr));
   }
 
   @AfterReturning(returning = "ret", pointcut = "webLog()")

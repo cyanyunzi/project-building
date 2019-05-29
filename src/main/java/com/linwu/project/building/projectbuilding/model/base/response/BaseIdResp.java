@@ -10,6 +10,6 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class BaseIdResp extends BaseResp  {
     @ApiModelProperty(value = "数据库主键ID")
-    protected Long id;
+    protected Integer id;
 
 }
