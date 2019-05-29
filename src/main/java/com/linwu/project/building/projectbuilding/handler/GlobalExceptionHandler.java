@@ -24,18 +24,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   @ResponseBody
   public Result exception(Exception ex) {
-    log.error(
-        "=================RestApi Error================= URL:{} METHOD:{} message:{}  Exception: {}",
-        RequestUtils.getRequest().getRequestURL().toString(),
-        RequestUtils.getRequest().getMethod(),
-        ex.getMessage(),
-        ex);
-
-    Result systemError = Result.success();
-    systemError.setRespCode("9999");
-    systemError.setRespDesc(ex.getMessage());
-
-    return systemError;
+    return Result.systemError(ex.getMessage());
   }
 
   /**
@@ -51,10 +40,7 @@ public class GlobalExceptionHandler {
     String message =
         violations.stream().map(set -> set.getMessage()).collect(Collectors.joining(","));
 
-    Result paramsError = Result.success();
-    paramsError.setRespCode("1111");
-    paramsError.setRespDesc(message);
-    return paramsError;
+    return Result.paramsError(message);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -63,37 +49,18 @@ public class GlobalExceptionHandler {
     Optional<ObjectError> first = ex.getBindingResult().getAllErrors().stream().findFirst();
     String message = first.map(error -> error.getDefaultMessage()).orElse("参数校验异常");
 
-    Result paramsError = Result.success();
-    paramsError.setRespCode("1111");
-    paramsError.setRespDesc(message);
-    return paramsError;
+    return Result.paramsError(message);
   }
 
   @ExceptionHandler(BizException.class)
   @ResponseBody
   public Result bizException(BizException ex) {
-    log.info(
-        "=================BizException================= Url:{} message:{}",
-        RequestUtils.getRequest().getRequestURL(),
-        ex.getMessage());
-
-    Result paramsError = Result.success();
-    paramsError.setRespCode(ex.getCode());
-    paramsError.setRespDesc(ex.getMessage());
-    return paramsError;
+    return Result.bizError(ex.getMessage());
   }
 
   @ExceptionHandler(ParamsException.class)
   @ResponseBody
   public Result paramsException(ParamsException ex) {
-    log.info(
-        "=================paramsException================= Url:{} message:{}",
-        RequestUtils.getRequest().getRequestURL(),
-        ex.getMessage());
-
-    Result paramsError = Result.success();
-    paramsError.setRespCode(ex.getCode());
-    paramsError.setRespDesc(ex.getMessage());
-    return paramsError;
+    return Result.paramsError(ex.getMessage());
   }
 }

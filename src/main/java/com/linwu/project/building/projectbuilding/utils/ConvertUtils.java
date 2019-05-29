@@ -39,7 +39,7 @@ public class ConvertUtils {
   }
 
   /**
-   * PoList转VOList
+   * Po List转VOList
    *
    * @param t
    * @param respClass
@@ -61,7 +61,7 @@ public class ConvertUtils {
   }
 
   /**
-   * PoList转VOList
+   * Po List转VOList
    *
    * @param t
    * @param respClass
@@ -79,25 +79,6 @@ public class ConvertUtils {
       return baseListResp;
     } catch (Exception e) {
       throw new RuntimeException(e);
-    }
-  }
-
-  /**
-   * BO 转DTO
-   *
-   * @param bo
-   * @param dtoClazz
-   * @param <D>
-   * @param <B>
-   * @return
-   */
-  public static <D extends BaseDTO, B extends BaseBO> D boConvertDto(B bo, Class<D> dtoClazz) {
-    try {
-      D dto = dtoClazz.newInstance();
-      BeanUtils.copyProperties(bo, dto);
-      return dto;
-    } catch (Exception e) {
-      throw new RuntimeException("BO转DTO失败", e);
     }
   }
 }
