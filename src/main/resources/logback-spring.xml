@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- logback中一共有5种有效级别，分别是TRACE、DEBUG、INFO、WARN、ERROR，优先级依次从低到高 -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+  <conversionRule conversionWord="ip"
+    converterClass="com.homedo.common.util.logback.support.convert.IpConvert"/>
+
+  <property name="DEFAULT_CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%level] %c{15}.%M-%L - %m %xEx%n"/>
+
+  <!-- 设置日志目录根目录 -->
+  <property name="ROOT_DIR_NAME" value="/opt/logs/10187/applog/"/>
+  <!-- 设置日志归档目录根目录 -->
+  <property name="ROOT_DIR_BAK_NAME" value="logs_bak/10187"/>
+  <!-- 设置输出所有日志的文件名 -->
+  <property name="ALL_LOG_FILE_NAME" value="odin-sol_all_log"/>
+  <!-- 设置输出错误日志的文件名 -->
+  <property name="ERROR_LOG_FILE_NAME" value="odin-sol_error_log"/>
+
+  <!-- 将所有记录日志打印到控制台 -->
+  <appender name="ALL2CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>TRACE</level>
+    </filter>
+    <encoder>
+      <pattern>${DEFAULT_CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+  <!-- 将所有记录日志输出到文件 -->
+  <appender name="ALL2FILE"
+    class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 根据时间来制定滚动策略 -->
+    <file>${ROOT_DIR_NAME}/${ALL_LOG_FILE_NAME}.log</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>TRACE</level>
+    </filter>
+    <rollingPolicy
+      class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!-- 每天一归档 -->
+      <fileNamePattern>${ROOT_DIR_BAK_NAME}/%d{yyyy-MM-dd}/${ALL_LOG_FILE_NAME}-%d{yyyy-MM-dd}.%i.txt
+      </fileNamePattern>
+      <!-- 单个日志文件最多 200MB, 200天的日志周期，最大不能超过1000GB -->
+      <maxFileSize>200MB</maxFileSize>
+      <maxHistory>200</maxHistory>
+      <totalSizeCap>1000GB</totalSizeCap>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>${DEFAULT_CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+
+  <appender name="ERROR_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${ROOT_DIR_NAME}/${ERROR_LOG_FILE_NAME}.log</file>
+    <append>true</append>
+
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+
+    <rollingPolicy
+      class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <!-- 每天一归档 -->
+      <fileNamePattern>${ROOT_DIR_BAK_NAME}/%d{yyyy-MM-dd}/${ERROR_LOG_FILE_NAME}-%d{yyyy-MM-dd}.%i.txt
+      </fileNamePattern>
+      <!-- 单个日志文件最多 200MB, 200天的日志周期，最大不能超过1000GB -->
+      <maxFileSize>200MB</maxFileSize>
+      <maxHistory>200</maxHistory>
+      <totalSizeCap>1000GB</totalSizeCap>
+    </rollingPolicy>
+
+    <encoder>
+      <pattern>${DEFAULT_CONSOLE_LOG_PATTERN}</pattern>
+    </encoder>
+  </appender>
+
+
+  <!-- 异步日志配置 -->
+  <appender name="ALL2CONSOLE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <discardingThreshold>0</discardingThreshold>
+    <queueSize>2000</queueSize>
+    <appender-ref ref="ALL2CONSOLE"/>
+  </appender>
+
+  <appender name="ALL2FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <discardingThreshold>0</discardingThreshold>
+    <queueSize>2000</queueSize>
+    <appender-ref ref="ALL2FILE"/>
+  </appender>
+
+  <appender name="ERROR_LOG_FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <discardingThreshold>0</discardingThreshold>
+    <queueSize>2000</queueSize>
+    <appender-ref ref="ERROR_LOG_FILE"/>
+  </appender>
+
+  <logger name="org" level="INFO" additivity="true"/>
+  <logger name="com" level="INFO" additivity="true"/>
+  <logger name="java" level="INFO" additivity="true"/>
+  <logger name="javax" level="INFO" additivity="true"/>
+  <logger name="shaded" level="INFO" additivity="true"/>
+  <logger name="sun" level="INFO" additivity="true"/>
+  <logger name="tk" level="INFO" additivity="true"/>
+  <logger name="freemarker" level="INFO" additivity="true"/>
+  <logger name="io" level="INFO" additivity="true"/>
+  <logger name="zipkin" level="INFO" additivity="true"/>
+  <logger name="springfox" level="INFO" additivity="true"/>
+  <logger name="cn.iautos.manager" level="debug"/>
+
+
+  <root level="TRACE">
+    <appender-ref ref="ALL2CONSOLE"/>
+    <appender-ref ref="ALL2FILE_ASYNC"/>
+    <appender-ref ref="ERROR_LOG_FILE_ASYNC"/>
+  </root>
+</configuration>
+

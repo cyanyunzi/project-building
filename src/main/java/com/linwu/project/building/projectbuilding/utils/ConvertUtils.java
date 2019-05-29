@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import com.linwu.project.building.projectbuilding.model.base.bo.BaseBO;
 import com.linwu.project.building.projectbuilding.model.base.dto.BaseDTO;
+import com.linwu.project.building.projectbuilding.model.base.entity.BaseEntity;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseIdResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseListResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BasePageListResp;
@@ -104,13 +105,14 @@ public class ConvertUtils {
     }
   }
 
-  public static <T, R extends BaseResp> BaseIdResp convertBaseIdResp(
+  public static <T extends BaseEntity, R extends BaseResp> BaseIdResp convertBaseIdResp(
           T t) {
     try {
       if (t == null) {
         return null;
       }
       BaseIdResp resp = new BaseIdResp();
+      Integer id = t.getId();
       BeanUtils.copyProperties(t, resp);
       return resp;
     } catch (Exception e) {

@@ -41,6 +41,8 @@ public class Result<T extends BaseResp> implements Serializable {
 
   public static <T extends BaseResp> Result success(T data) {
     Result result = new Result();
+    result.setRespCode(ResponseEmum.SUCCESS.getCode());
+    result.setRespDesc(ResponseEmum.SUCCESS.getMsg());
     result.setData(data);
     return result;
   }

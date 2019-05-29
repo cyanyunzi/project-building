@@ -3,6 +3,7 @@ package com.linwu.project.building.projectbuilding.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linwu.project.building.projectbuilding.model.base.response.BaseIdResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseListResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BasePageListResp;
 import com.linwu.project.building.projectbuilding.model.base.response.Result;
@@ -12,12 +13,18 @@ import com.linwu.project.building.projectbuilding.model.request.user.UserPageReq
 import com.linwu.project.building.projectbuilding.model.request.user.UserReq;
 import com.linwu.project.building.projectbuilding.service.UserService;
 import com.linwu.project.building.projectbuilding.utils.ConvertUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.Optional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户信息 前端控制器
@@ -25,6 +32,7 @@ import java.util.Optional;
  * @author 林雾
  * @since 2019-05-29
  */
+@Api(tags = {"用户"})
 @RestController
 public class UserController {
   @Autowired private UserService userService;
@@ -89,14 +97,14 @@ public class UserController {
 
   @ApiOperation(value = "新增用户")
   @PostMapping("/user")
-  public Result remove(@RequestBody UserReq req) {
+  public Result<BaseIdResp> add(@RequestBody UserReq req) {
     User user = req.convertEntity(User.class);
     userService.save(user);
     return Result.success(ConvertUtils.convertBaseIdResp(user));
   }
 
   @ApiOperation(value = "修改用户")
-  @PostMapping("/user/{id}")
+  @PutMapping("/user/{id}")
   public Result remove(@PathVariable Integer id, @RequestBody UserReq req) {
     Optional.ofNullable(userService.getById(id))
         .ifPresent(

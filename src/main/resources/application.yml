@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 15000
+      idle-timeout: 30000
+      max-lifetime: 900000
+      maximum-pool-size: 30
+      minimum-idle: 5
+      pool-name: DatebookHikariCP
+    password: root
+    url: jdbc:mysql://localhost:3306/mybatis-plus?autoReconnect=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0

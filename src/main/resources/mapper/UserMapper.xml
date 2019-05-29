@@ -2,24 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linwu.project.building.projectbuilding.mapper.UserMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.linwu.project.building.projectbuilding.model.entity.User">
-        <id column="id" property="id"/>
-        <result column="user_id" property="userId"/>
-        <result column="user_name" property="userName"/>
-        <result column="is_del" property="isDel"/>
-        <result column="delete_time" property="deleteTime"/>
-        <result column="version" property="version"/>
-        <result column="created_by" property="createdBy"/>
-        <result column="created_name" property="createdName"/>
-        <result column="modified_by" property="modifiedBy"/>
-        <result column="modified_name" property="modifiedName"/>
-        <result column="created_time" property="createdTime"/>
-        <result column="modified_time" property="modifiedTime"/>
-    </resultMap>
+  <!-- 通用查询映射结果 -->
+  <resultMap id="BaseResultMap" type="com.linwu.project.building.projectbuilding.model.entity.User">
+    <id column="id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="user_name" property="userName"/>
+    <result column="is_del" property="isDel"/>
+    <result column="delete_time" property="deleteTime"/>
+    <result column="version" property="version"/>
+    <result column="created_by" property="createdBy"/>
+    <result column="created_name" property="createdName"/>
+    <result column="modified_by" property="modifiedBy"/>
+    <result column="modified_name" property="modifiedName"/>
+    <result column="created_time" property="createdTime"/>
+    <result column="modified_time" property="modifiedTime"/>
+  </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
+  <!-- 通用查询结果列 -->
+  <sql id="Base_Column_List">
         id, user_id, user_name, is_del, delete_time, version, created_by, created_name, modified_by, modified_name, created_time, modified_time
     </sql>
 

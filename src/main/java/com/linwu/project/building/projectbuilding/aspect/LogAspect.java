@@ -5,15 +5,18 @@ import com.linwu.project.building.projectbuilding.exceptions.BizException;
 import com.linwu.project.building.projectbuilding.exceptions.ParamsException;
 import com.linwu.project.building.projectbuilding.model.base.response.Result;
 import com.linwu.project.building.projectbuilding.utils.RequestUtils;
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
-import org.springframework.stereotype.Component;
-
+import java.util.Arrays;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
 /**
  * @author ：林雾
@@ -24,14 +27,15 @@ import java.util.Arrays;
 @Component
 @Slf4j
 public class LogAspect {
-  @Pointcut("execution(public * com.linwu.project.building.projectbuilding.controller.*.*.*(..))")
+  @Pointcut("execution(public * com.linwu.project.building.projectbuilding.controller..*.*(..))")
   public void webLog() {}
 
   @Before("webLog()")
   public void deBefore(JoinPoint joinPoint) {
     HttpServletRequest request = RequestUtils.getRequest();
     Object[] arr = joinPoint.getArgs();
-    arr = Arrays.stream(arr)
+    arr =
+        Arrays.stream(arr)
             .filter(b -> !(b instanceof ServletRequest || b instanceof ServletResponse))
             .toArray();
 
