@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class User extends BaseEntity {
 
-  private Integer userId;
+//  private Integer userId;
 
   private String userName;
 

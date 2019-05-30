@@ -90,6 +90,12 @@ public class UserController {
     return Result.success(ConvertUtils.convertResp(userService.getById(id), UserResp.class));
   }
 
+  @ApiOperation(value = "测试扩展Plus用户ID查询通用方法") //
+  @GetMapping("/plus/user/{userId}")
+  public Result<UserResp> userId(@PathVariable Integer userId) {
+    return Result.success(ConvertUtils.convertResp(userService.getByUserId(userId), UserResp.class));
+  }
+
   @ApiOperation(value = "删除用户")
   @DeleteMapping("/user/{id}")
   public Result remove(@PathVariable Integer id) {

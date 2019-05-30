@@ -1,7 +1,7 @@
 package com.linwu.project.building.projectbuilding.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.linwu.project.building.projectbuilding.model.entity.User;
+import com.linwu.project.building.projectbuilding.plus.MyMapper;
 
 /**
  * 用户信息 Mapper 接口
@@ -9,4 +9,4 @@ import com.linwu.project.building.projectbuilding.model.entity.User;
  * @author 林雾
  * @since 2019-05-29
  */
-public interface UserMapper extends BaseMapper<User> {}
+public interface UserMapper extends MyMapper<User> {}

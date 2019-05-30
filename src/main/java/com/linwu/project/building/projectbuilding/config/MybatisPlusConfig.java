@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.injector.LogicSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.linwu.project.building.projectbuilding.plus.MySqlInjector;
 import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,17 +17,17 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MybatisPlusConfig {
-  /** 逻辑删除 */
+  /** 自定义扩展sql */
   @Bean
   public ISqlInjector sqlInjector() {
-    return new LogicSqlInjector();
+    return new MySqlInjector();
   }
 
   /** 乐观锁 */
-//  @Bean
-//  public OptimisticLockerInterceptor optimisticLockerInterceptor() {
-//    return new OptimisticLockerInterceptor();
-//  }
+  @Bean
+  public OptimisticLockerInterceptor optimisticLockerInterceptor() {
+    return new OptimisticLockerInterceptor();
+  }
 
   /** 分页插件 */
   @Bean
