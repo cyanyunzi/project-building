@@ -31,6 +31,7 @@ mvnw
 .vscode/
 
 .mvn
+.logs_bak
 
 
 

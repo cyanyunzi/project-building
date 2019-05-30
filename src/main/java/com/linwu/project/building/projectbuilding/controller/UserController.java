@@ -3,16 +3,18 @@ package com.linwu.project.building.projectbuilding.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linwu.project.building.projectbuilding.model.base.UserContext;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseIdResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BaseListResp;
 import com.linwu.project.building.projectbuilding.model.base.response.BasePageListResp;
 import com.linwu.project.building.projectbuilding.model.base.response.Result;
 import com.linwu.project.building.projectbuilding.model.entity.User;
-import com.linwu.project.building.projectbuilding.model.entity.UserResp;
+import com.linwu.project.building.projectbuilding.model.response.user.UserResp;
 import com.linwu.project.building.projectbuilding.model.request.user.UserPageReq;
 import com.linwu.project.building.projectbuilding.model.request.user.UserReq;
 import com.linwu.project.building.projectbuilding.service.UserService;
 import com.linwu.project.building.projectbuilding.utils.ConvertUtils;
+import com.linwu.project.building.projectbuilding.utils.UserContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.Optional;
@@ -98,7 +100,9 @@ public class UserController {
   @ApiOperation(value = "新增用户")
   @PostMapping("/user")
   public Result<BaseIdResp> add(@RequestBody UserReq req) {
+    UserContextHolder.setUsercontext(new UserContext("新增操作人","123"));
     User user = req.convertEntity(User.class);
+
     userService.save(user);
     return Result.success(ConvertUtils.convertBaseIdResp(user));
   }
@@ -106,13 +110,13 @@ public class UserController {
   @ApiOperation(value = "修改用户")
   @PutMapping("/user/{id}")
   public Result remove(@PathVariable Integer id, @RequestBody UserReq req) {
+    UserContextHolder.setUsercontext(new UserContext("修改操作人","123"));
     Optional.ofNullable(userService.getById(id))
         .ifPresent(
             user -> {
               BeanUtils.copyProperties(req, user);
               userService.updateById(user);
             });
-
     return Result.success();
   }
 }
